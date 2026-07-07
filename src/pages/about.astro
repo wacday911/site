@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+
+<Base title="About — {SITE.name}">
+  <section class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="mb-6 text-3xl font-bold">📖 About {SITE.name}</h1>
+    <div class="prose prose-zinc max-w-none">
+      <p>
+        <strong>{SITE.name}</strong> is your daily destination for everything trending — from the latest gadgets and
+        gaming tips to budget-friendly travel guides and entertainment buzz.
+      </p>
+      <p>We focus on content that matters to the Indian audience:</p>
+      <ul>
+        <li><strong>Tech:</strong> Honest reviews of phones, laptops, and gadgets available in India</li>
+        <li><strong>Gaming:</strong> Games that run on low-end devices, plus tips and tricks</li>
+        <li><strong>Travel:</strong> Budget trips, hidden gems, and weekend getaways across India</li>
+        <li><strong>Entertainment:</strong> Web series, movie reviews, and what's buzzing in pop culture</li>
+        <li><strong>Trending:</strong> What everyone's talking about right now</li>
+      </ul>
+      <p>
+        Some links on this site are Amazon affiliate links. If you buy something through them, we may earn a small
+        commission at no extra cost to you. This helps us keep creating great content.
+      </p>
+    </div>
+  </section>
+</Base>

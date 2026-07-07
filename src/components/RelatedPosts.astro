@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import BlogCard from './BlogCard.astro';
+
+export interface Props {
+  current: CollectionEntry<'blog'>;
+}
+
+const { current } = Astro.props;
+const allPosts = await getCollection('blog', ({ data }) => !data.draft && data.category === current.data.category);
+const related = allPosts.filter((p) => p.id !== current.id).slice(0, 3);
+---
+
+{related.length > 0 && (
+  <div>
+    <h3 class="mb-4 text-xl font-bold">More in {current.data.category}</h3>
+    <div class="grid gap-4 md:grid-cols-3">
+      {related.map((post) => <BlogCard post={post} />)}
+    </div>
+  </div>
+)}

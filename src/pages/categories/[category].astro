@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import BlogCard from '../../components/BlogCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE } from '../../data/site';
+
+export async function getStaticPaths() {
+  return SITE.categories.map((cat) => ({
+    params: { category: cat.slug },
+    props: { cat },
+  }));
+}
+
+const { cat } = Astro.props;
+const posts = await getCollection('blog', ({ data }) => !data.draft && data.category === cat.slug);
+posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<Base title={`${cat.emoji} ${cat.label} — ${SITE.name}`} description={cat.description}>
+  <section class="mx-auto max-w-5xl px-4 py-12">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold">{cat.emoji} {cat.label}</h1>
+      <p class="mt-1 text-zinc-500">{cat.description}</p>
+    </div>
+
+    {posts.length > 0 ? (
+      <div class="grid gap-4 md:grid-cols-3">
+        {posts.map((post) => <BlogCard post={post} />)}
+      </div>
+    ) : (
+      <p class="py-20 text-center text-zinc-400">No posts in this category yet. Stay tuned!</p>
+    )}
+  </section>
+</Base>

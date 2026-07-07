@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const counts: Record<string, number> = {};
+allPosts.forEach((p) => {
+  counts[p.data.category] = (counts[p.data.category] || 0) + 1;
+});
+---
+
+<Base title="Categories — {SITE.name}" description="Browse all categories">
+  <section class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="mb-8 text-3xl font-bold">📂 Categories</h1>
+    <div class="grid gap-4 md:grid-cols-2">
+      {SITE.categories.map((cat) => (
+        <a
+          href={`/categories/${cat.slug}/`}
+          class="group rounded-xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:shadow-md hover:border-primary/30"
+        >
+          <div class="mb-2 text-2xl">{cat.emoji}</div>
+          <h2 class="text-lg font-semibold group-hover:text-primary transition">{cat.label}</h2>
+          <p class="mt-1 text-sm text-zinc-500">{cat.description}</p>
+          <p class="mt-2 text-xs text-zinc-400">{counts[cat.slug] || 0} posts</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fyi.wisp.uno/sitemap-index.xml
