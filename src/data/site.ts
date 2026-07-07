@@ -1,13 +1,13 @@
 export const SITE = {
-  name: 'WispyBytes',
+  name: 'FYI',
   tagline: 'Tech, Gaming, Travel & More — All Things Trending',
   description: 'Your daily dose of tech reviews, gaming tips, budget travel guides, entertainment buzz, and trending stories — made for India.',
   url: 'https://fyi.wisp.uno',
-  author: 'WispyBytes Team',
+  author: 'FYI Team',
   locale: 'en_IN',
   defaultCategory: 'trending',
   social: {
-    twitter: '@wispybytes',
+    twitter: '@fyi_wisp',
   },
   categories: [
     { slug: 'tech', label: 'Tech', emoji: '💻', description: 'Gadgets, apps, and tech reviews' },
