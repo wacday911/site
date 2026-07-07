@@ -8,5 +8,11 @@ export default defineConfig({
   integrations: [sitemap(), mdx()],
   vite: {
     plugins: [tailwindcss()],
+    preview: {
+      allowedHosts: ['fyi.wisp.uno'],
+    },
+  },
+  devToolbar: {
+    enabled: false,
   },
 });
