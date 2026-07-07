@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "start": "astro preview",
     "preview": "astro preview",
     "astro": "astro",
     "postbuild": "node scripts/ping-search-engines.js",
