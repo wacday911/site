@@ -1,6 +1,19 @@
 ## Workflow
 
-### Writing & previewing new posts (dev mode)
+### Auto-deploy (Wisp production server)
+
+The production server at `fyi.wisp.uno` runs `scripts/start.js` which:
+- Keeps `astro dev` running with hot-reload
+- Runs `git pull` every 2 minutes
+
+New posts auto-deploy ~2 minutes after push. **No manual restart needed.**
+
+The Wisp startup command should be set to:
+```
+cd /home/container && npm install && node scripts/start.js
+```
+
+### Writing & previewing new posts (local dev)
 
 The dev server auto-detects new `.mdx` files and hot-reloads in the browser:
 
