@@ -17,6 +17,22 @@ astro dev --background
 Manage with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 No restart needed when adding or editing posts.
 
+### Generating blog images
+
+Auto-generate featured images for posts that don't have one:
+
+```
+npm run gen-images
+```
+
+Uses Pollinations.ai (free, no API key). Generates a 1200×630 image based on the post title/description/tags, saves to `public/{slug}.jpg`, and updates frontmatter.
+
+To regenerate all images (overwrites existing):
+
+```
+npm run gen-images:all
+```
+
 ### Building for production
 
 Only run build when deploying to the live site:

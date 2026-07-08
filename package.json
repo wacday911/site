@@ -12,7 +12,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "postbuild": "node scripts/ping-search-engines.js",
-    "ping:indexnow": "node scripts/ping-indexnow.js"
+    "ping:indexnow": "node scripts/ping-indexnow.js",
+    "gen-images": "node scripts/generate-images.js",
+    "gen-images:all": "node scripts/generate-images.js --all"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",
