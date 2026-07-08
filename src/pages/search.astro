@@ -8,6 +8,20 @@ const posts = await getCollection('blog', ({ data }) => !data.draft);
 
 <Base title="Search — {SITE.name}" description="Search articles">
   <slot name="head">
+    <script type="application/ld+json" set:html={JSON.stringify([{
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: SITE.name,
+      url: SITE.url,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${SITE.url}/search/?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    }])} />
     <script>
       import Fuse from 'fuse.js';
       const posts = JSON.parse(document.getElementById('search-data')?.textContent || '[]');

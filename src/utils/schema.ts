@@ -10,6 +10,7 @@ export function BlogPostSchema(post: CollectionEntry<'blog'>) {
     '@type': 'BlogPosting',
     headline: data.title,
     description: data.description,
+    keywords: data.tags.join(', '),
     datePublished: data.pubDate.toISOString(),
     dateModified: data.updatedDate?.toISOString() || data.pubDate.toISOString(),
     author: {
@@ -21,11 +22,18 @@ export function BlogPostSchema(post: CollectionEntry<'blog'>) {
     publisher: {
       '@type': 'Organization',
       name: SITE.name,
+      url: SITE.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE.url}/favicon.svg`,
+      },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,
     },
+    inLanguage: SITE.locale.replace('_', '-'),
+    isAccessibleForFree: true,
   };
 }
 
@@ -49,5 +57,30 @@ export function WebSiteSchema() {
     name: SITE.name,
     description: SITE.description,
     url: SITE.url,
+    inLanguage: SITE.locale.replace('_', '-'),
+    publisher: {
+      '@type': 'Organization',
+      name: SITE.name,
+      url: SITE.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE.url}/favicon.svg`,
+      },
+    },
+  };
+}
+
+export function WebPageSchema(title: string, description: string, url: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url,
+    inLanguage: SITE.locale.replace('_', '-'),
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': SITE.url,
+    },
   };
 }

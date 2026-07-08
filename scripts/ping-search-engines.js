@@ -1,23 +1,21 @@
-// Ping Google & Bing to notify them of sitemap updates
-// Usage: node scripts/ping-search-engines.js
+// Sitemap submission for Google & Bing
+// Google deprecated sitemap pings in 2023.
+// Submit manually at:
+//   Google: https://search.google.com/search-console
+//   Bing:   https://www.bing.com/webmasters
+//
+// IndexNow (used below) handles Bing + other participating search engines.
 
 const siteUrl = 'https://fyi.wisp.uno';
 const sitemapUrl = `${siteUrl}/sitemap-index.xml`;
 
 async function main() {
-  const engines = [
-    { name: 'Google', url: `https://www.google.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}` },
-    { name: 'Bing', url: `https://www.bing.com/ping?sitemap=${encodeURIComponent(sitemapUrl)}` },
-  ];
-
-  for (const engine of engines) {
-    try {
-      const resp = await fetch(engine.url);
-      console.log(`${engine.name}: ${resp.status} ${resp.statusText}`);
-    } catch (err) {
-      console.error(`${engine.name}: Failed — ${err.message}`);
-    }
-  }
+  console.log(`Sitemap: ${sitemapUrl}`);
+  console.log('');
+  console.log('Google: Submit sitemap manually at https://search.google.com/search-console');
+  console.log('Bing:   IndexNow is used instead (run: npm run ping:indexnow)');
+  console.log('');
+  console.log('Done.');
 }
 
 main();

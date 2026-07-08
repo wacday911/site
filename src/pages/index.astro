@@ -3,18 +3,19 @@ import Base from '../layouts/Base.astro';
 import BlogCard from '../components/BlogCard.astro';
 import { SITE } from '../data/site';
 import { getCollection } from 'astro:content';
-import { WebSiteSchema } from '../utils/schema';
+import { WebSiteSchema, WebPageSchema } from '../utils/schema';
 
 const posts = await getCollection('blog', ({ data }) => !data.draft);
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 
 const featured = posts.filter((p) => p.data.featured).slice(0, 3);
 const latest = posts.slice(0, 9);
+const schemas = [WebSiteSchema(), WebPageSchema(`${SITE.name} — ${SITE.tagline}`, SITE.description, SITE.url)];
 ---
 
-<Base>
+<Base title={SITE.tagline} description={SITE.description}>
   <slot name="head">
-    <script type="application/ld+json" set:html={JSON.stringify([WebSiteSchema()])} />
+    <script type="application/ld+json" set:html={JSON.stringify(schemas)} />
   </slot>
 
   <section class="mx-auto max-w-5xl px-4 py-12">

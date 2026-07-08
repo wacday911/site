@@ -20,9 +20,16 @@ const schemas = [WebSiteSchema(), BreadcrumbSchema([
   { name: data.category, url: `${SITE.url}/categories/${data.category}/` },
   { name: data.title, url },
 ]), BlogPostSchema(post)];
+
+const articleMeta = {
+  publishedTime: data.pubDate.toISOString(),
+  modifiedTime: data.updatedDate?.toISOString() || data.pubDate.toISOString(),
+  tags: data.tags,
+  section: data.category,
+};
 ---
 
-<Base title={data.title} description={data.description} image={data.image}>
+<Base title={data.title} description={data.description} image={data.image} ogType="article" articleMeta={articleMeta}>
   <slot name="head">
     <script type="application/ld+json" set:html={JSON.stringify(schemas)} />
   </slot>

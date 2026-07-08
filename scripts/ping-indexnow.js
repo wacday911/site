@@ -3,7 +3,7 @@
 // Example: node scripts/ping-indexnow.js https://fyi.wisp.uno
 
 const siteUrl = process.argv[2] || 'https://fyi.wisp.uno';
-const key = process.argv[3] || 'YOUR_INDEXNOW_KEY';
+const key = process.argv[3] || 'e41cd4e44b094b3597ff69d930e6721f';
 
 async function main() {
   console.log(`Pinging IndexNow for: ${siteUrl}`);
