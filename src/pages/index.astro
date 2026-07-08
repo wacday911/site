@@ -26,7 +26,7 @@ const schemas = [WebSiteSchema(), WebPageSchema(`${SITE.name} — ${SITE.tagline
 
     {featured.length > 0 && (
       <div class="mb-12">
-        <h2 class="mb-4 text-xl font-bold">🔥 Featured</h2>
+        <h2 class="mb-4 flex items-center gap-2 text-xl font-bold">Featured</h2>
         <div class="grid gap-4 md:grid-cols-3">
           {featured.map((post) => <BlogCard post={post} />)}
         </div>
@@ -34,7 +34,7 @@ const schemas = [WebSiteSchema(), WebPageSchema(`${SITE.name} — ${SITE.tagline
     )}
 
     <div>
-      <h2 class="mb-4 text-xl font-bold">📝 Latest Posts</h2>
+      <h2 class="mb-4 flex items-center gap-2 text-xl font-bold">Latest Posts</h2>
       <div class="grid gap-4 md:grid-cols-3">
         {latest.map((post) => <BlogCard post={post} />)}
       </div>

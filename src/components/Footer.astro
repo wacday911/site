@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../data/site';
+import Icon from './Icon.astro';
 ---
 
 <footer class="mt-16 border-t border-zinc-200 bg-white">
@@ -13,7 +14,7 @@ import { SITE } from '../data/site';
         <h4 class="mb-3 font-semibold">Categories</h4>
         <ul class="space-y-1.5 text-sm text-zinc-500">
           {SITE.categories.map((cat) => (
-            <li><a href={`/categories/${cat.slug}/`} class="hover:text-primary transition">{cat.emoji} {cat.label}</a></li>
+            <li><a href={`/categories/${cat.slug}/`} class="hover:text-primary transition inline-flex items-center gap-1.5"><Icon name={cat.icon} class="h-4 w-4" />{cat.label}</a></li>
           ))}
         </ul>
       </div>

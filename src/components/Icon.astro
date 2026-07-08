@@ -1,0 +1,38 @@
+---
+import FireIcon from './icons/FireIcon.astro';
+import PenIcon from './icons/PenIcon.astro';
+import SearchIcon from './icons/SearchIcon.astro';
+import FolderIcon from './icons/FolderIcon.astro';
+import BookIcon from './icons/BookIcon.astro';
+import PackageIcon from './icons/PackageIcon.astro';
+import TechIcon from './icons/TechIcon.astro';
+import GamingIcon from './icons/GamingIcon.astro';
+import TravelIcon from './icons/TravelIcon.astro';
+import EntertainmentIcon from './icons/EntertainmentIcon.astro';
+import TrendingIcon from './icons/TrendingIcon.astro';
+
+export interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+
+const icons: Record<string, any> = {
+  fire: FireIcon,
+  pen: PenIcon,
+  search: SearchIcon,
+  folder: FolderIcon,
+  book: BookIcon,
+  package: PackageIcon,
+  tech: TechIcon,
+  gaming: GamingIcon,
+  travel: TravelIcon,
+  entertainment: EntertainmentIcon,
+  trending: TrendingIcon,
+};
+---
+
+{
+  icons[name] ? <icons[name] class={className} /> : null
+}

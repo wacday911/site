@@ -10,10 +10,10 @@ export const SITE = {
     twitter: '@fyi_wisp',
   },
   categories: [
-    { slug: 'tech', label: 'Tech', emoji: '💻', description: 'Gadgets, apps, and tech reviews' },
-    { slug: 'gaming', label: 'Gaming', emoji: '🎮', description: 'Games for low-end devices, tips & tricks' },
-    { slug: 'travel', label: 'Travel', emoji: '✈️', description: 'Budget trips and hidden gems in India' },
-    { slug: 'entertainment', label: 'Entertainment', emoji: '🎬', description: 'Web series, movies, and celeb buzz' },
-    { slug: 'trending', label: 'Trending', emoji: '🔥', description: 'What everyone is talking about right now' },
+    { slug: 'tech', label: 'Tech', icon: 'tech', description: 'Gadgets, apps, and tech reviews' },
+    { slug: 'gaming', label: 'Gaming', icon: 'gaming', description: 'Games for low-end devices, tips & tricks' },
+    { slug: 'travel', label: 'Travel', icon: 'travel', description: 'Budget trips and hidden gems in India' },
+    { slug: 'entertainment', label: 'Entertainment', icon: 'entertainment', description: 'Web series, movies, and celeb buzz' },
+    { slug: 'trending', label: 'Trending', icon: 'trending', description: 'What everyone is talking about right now' },
   ],
 };

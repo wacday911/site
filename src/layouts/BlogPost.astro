@@ -7,6 +7,7 @@ import { BlogPostSchema, BreadcrumbSchema, WebSiteSchema } from '../utils/schema
 import { formatDate } from '../utils/dates';
 import ShareButtons from '../components/ShareButtons.astro';
 import RelatedPosts from '../components/RelatedPosts.astro';
+import Icon from '../components/Icon.astro';
 
 export interface Props {
   post: CollectionEntry<'blog'>;
@@ -56,7 +57,9 @@ const articleMeta = {
 
     {data.amazonAsin && (
       <div class="mt-8 rounded-xl border border-zinc-200 bg-white p-6 text-center shadow-sm">
-        <p class="mb-3 text-sm text-zinc-500">📦 Check price on Amazon</p>
+        <p class="mb-3 inline-flex items-center gap-1.5 text-sm text-zinc-500">
+          <Icon name="package" class="h-4 w-4" /> Check price on Amazon
+        </p>
         <a
           href={`https://www.amazon.in/dp/${data.amazonAsin}?tag=${AMAZON.tag}`}
           target="_blank"

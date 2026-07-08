@@ -4,6 +4,7 @@ import BlogCard from '../../components/BlogCard.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '../../data/site';
 import { WebPageSchema } from '../../utils/schema';
+import Icon from '../../components/Icon.astro';
 
 export async function getStaticPaths() {
   return SITE.categories.map((cat) => ({
@@ -17,14 +18,17 @@ const posts = await getCollection('blog', ({ data }) => !data.draft && data.cate
 posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 ---
 
-<Base title={`${cat.emoji} ${cat.label} — ${SITE.name}`} description={cat.description}>
+<Base title={`${cat.label} — ${SITE.name}`} description={cat.description}>
   <slot name="head">
     <script type="application/ld+json" set:html={JSON.stringify([WebPageSchema(`${cat.label} — ${SITE.name}`, cat.description, `${SITE.url}/categories/${cat.slug}/`)])} />
   </slot>
   <section class="mx-auto max-w-5xl px-4 py-12">
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold">{cat.emoji} {cat.label}</h1>
-      <p class="mt-1 text-zinc-500">{cat.description}</p>
+    <div class="mb-8 flex items-center gap-2">
+      <Icon name={cat.icon} class="h-7 w-7 text-zinc-600" />
+      <div>
+        <h1 class="text-3xl font-bold">{cat.label}</h1>
+        <p class="mt-1 text-zinc-500">{cat.description}</p>
+      </div>
     </div>
 
     {posts.length > 0 ? (

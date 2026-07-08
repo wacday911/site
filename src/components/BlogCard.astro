@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { formatDateShort, isRecent } from '../utils/dates';
 import { SITE } from '../data/site';
+import Icon from './Icon.astro';
 
 export interface Props {
   post: CollectionEntry<'blog'>;
@@ -15,8 +16,9 @@ const cat = SITE.categories.find((c) => c.slug === data.category);
 <article class="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-md">
   <a href={`/${id}/`} class="block p-5">
     <div class="mb-3 flex items-center gap-2 text-xs text-zinc-400">
-      <span class="rounded-full bg-zinc-100 px-2.5 py-0.5 font-medium text-zinc-600">
-        {cat?.emoji} {cat?.label || data.category}
+      <span class="inline-flex items-center gap-1 rounded-full bg-zinc-100 px-2.5 py-0.5 font-medium text-zinc-600">
+        {cat?.icon && <Icon name={cat.icon} class="h-3.5 w-3.5" />}
+        {cat?.label || data.category}
       </span>
       <time datetime={data.pubDate.toISOString()}>{formatDateShort(data.pubDate)}</time>
       {isRecent(data.pubDate) && (
