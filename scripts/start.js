@@ -34,7 +34,7 @@ function npmBuild() {
   building = true;
   log('Building...');
   try {
-    execSync('npm run build', { cwd: ROOT, stdio: 'pipe' });
+    execSync('npm run build', { cwd: ROOT, stdio: 'inherit' });
     log('Build complete');
   } catch {
     log('Build failed');
@@ -64,12 +64,13 @@ function checkAndRebuild() {
   }
 }
 
-// Initial setup
+// Initial setup — always build on start (Wisp already pulled latest)
 log('Starting...');
-checkAndRebuild();
+gitPull();
+npmBuild();
 startPreview();
 
-// Periodic check
+// Periodic check — only rebuild when new commits detected
 setInterval(checkAndRebuild, PULL_INTERVAL);
 
 function shutdown() {
