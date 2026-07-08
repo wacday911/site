@@ -1,5 +1,5 @@
-// Production dev server with auto-deploy
-// Runs astro dev (hot-reload) + periodic git pull
+// Production server with auto-deploy
+// Runs astro preview (static file serving) + periodic git pull + rebuild
 // New GitHub pushes auto-deploy within ~2 minutes — no server restart needed
 
 import { execSync, spawn } from 'child_process';
@@ -11,30 +11,70 @@ const ROOT = resolve(__dirname, '..');
 const PORT = process.env.SERVER_PORT || 4321;
 const PULL_INTERVAL = 2 * 60 * 1000;
 
+let preview = null;
+let building = false;
+
+function log(msg) {
+  process.stdout.write(`[auto-deploy] ${msg}\n`);
+}
+
 function gitPull() {
   try {
-    execSync('git pull', { cwd: ROOT, stdio: 'pipe' });
+    const result = execSync('git pull', { cwd: ROOT, encoding: 'utf-8' });
+    const hasChanges = !result.includes('Already up to date');
+    if (hasChanges) log('New commits pulled');
+    return hasChanges;
   } catch {
-    // silent — git pull can fail if no remote or network issues
+    return false;
   }
 }
 
-// Initial pull
-gitPull();
+function npmBuild() {
+  if (building) return;
+  building = true;
+  log('Building...');
+  try {
+    execSync('npm run build', { cwd: ROOT, stdio: 'pipe' });
+    log('Build complete');
+  } catch {
+    log('Build failed');
+  }
+  building = false;
+}
 
-// Periodic pull
-const interval = setInterval(gitPull, PULL_INTERVAL);
+function startPreview() {
+  if (preview) preview.kill();
+  preview = spawn('npx', ['astro', 'preview', '--host', '0.0.0.0', '--port', String(PORT)], {
+    cwd: ROOT,
+    stdio: 'inherit',
+    env: { ...process.env },
+  });
+  preview.on('exit', (code) => {
+    log(`Preview server exited (code: ${code})`);
+    if (code !== 0) {
+      log('Restarting preview server...');
+      startPreview();
+    }
+  });
+}
 
-// Start astro dev server
-const dev = spawn('npx', ['astro', 'dev', '--host', '0.0.0.0', '--port', String(PORT)], {
-  cwd: ROOT,
-  stdio: 'inherit',
-  env: { ...process.env },
-});
+function checkAndRebuild() {
+  if (gitPull()) {
+    npmBuild();
+  }
+}
+
+// Initial setup
+log('Starting...');
+checkAndRebuild();
+startPreview();
+
+// Periodic check
+setInterval(checkAndRebuild, PULL_INTERVAL);
 
 function shutdown() {
-  clearInterval(interval);
-  dev.kill();
+  log('Shutting down...');
+  if (preview) preview.kill();
   process.exit(0);
 }
 
