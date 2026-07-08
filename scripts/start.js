@@ -50,6 +50,7 @@ function startPreview() {
     env: { ...process.env },
   });
   preview.on('exit', (code) => {
+    if (building) return;
     log(`Preview server exited (code: ${code})`);
     if (code !== 0) {
       log('Restarting preview server...');
@@ -60,7 +61,12 @@ function startPreview() {
 
 function checkAndRebuild() {
   if (gitPull()) {
+    if (preview) {
+      preview.kill();
+      preview = null;
+    }
     npmBuild();
+    startPreview();
   }
 }
 
