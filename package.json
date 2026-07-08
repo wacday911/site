@@ -14,7 +14,10 @@
     "postbuild": "node scripts/ping-search-engines.js",
     "ping:indexnow": "node scripts/ping-indexnow.js",
     "gen-images": "node scripts/generate-images.js",
-    "gen-images:all": "node scripts/generate-images.js --all"
+    "gen-images:all": "node scripts/generate-images.js --all",
+    "fetch-image": "node scripts/fetch-featured-image.js",
+    "fetch-image:all": "node scripts/fetch-featured-image.js --all",
+    "fetch-image:dry": "node scripts/fetch-featured-image.js --dry-run"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",

@@ -46,6 +46,32 @@ To regenerate all images (overwrites existing):
 npm run gen-images:all
 ```
 
+### Fetching real stock photos (Pexels/Unsplash/Pixabay)
+
+For higher-quality real photos from stock image providers:
+
+```
+npm run fetch-image <slug>       # specific post
+npm run fetch-image -- --all     # all posts without images
+npm run fetch-image -- --dry-run # preview without downloading
+```
+
+Requires an API key in `.env`:
+- `PEXELS_API_KEY` (preferred, free: https://www.pexels.com/api/)
+- `UNSPLASH_ACCESS_KEY` (fallback, free: https://unsplash.com/developers)
+- `PIXABAY_API_KEY` (fallback, free: https://pixabay.com/api/docs/)
+
+Without any API key, falls back to Openverse (free CC-licensed images, no key needed).
+
+The system:
+1. Analyzes full blog content (title, description, tags, body)
+2. Generates 5-10 search queries ranked by relevance
+3. Searches providers in order (Pexels → Unsplash → Pixabay → Openverse)
+4. Scores every image (0-100) based on relevance, quality, aspect ratio, source, and license
+5. Downloads the top image to `public/`
+6. Updates frontmatter with `image` and `imageAttribution` fields
+7. Caches downloaded images in `.image-cache/`
+
 ### Building for production
 
 Only run build when deploying to the live site:
